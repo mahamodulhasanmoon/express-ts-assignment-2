@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
-  title: Test Api Documentation
+  title: Label-2 Assignment Documentation
   version: 1.0.0
-  description: Hello Basic Project Learning Perpose
+  description: express Typescript skill assessment documentation
   termsOfService: https://example.com/terms
   contact:
     name: Mahamodul Hasan Moon
@@ -13,16 +13,14 @@ info:
     url: https://apache.com
 servers:
   - description: Development
-    url: https://localhost:8000/api/v1
+    url: http://localhost:4000/api
+  - description: Production
+    url: http://localhost:6000/api
 tags:
   - name: HealthChecks
-    description: public Api Endpoints  And Autentation Perpose
-  - name: Authentications
-    description: public Api Endpoints  And Autentation Perpose
-  - name: Posts
-    description: public Api Endpoints  And Autentation Perpose
-  - name: Blogs
-    description: public Api Endpoints  And Autentation Perpose
+    description: public Api Endpoints For check Server is Running Or not
+  - name: Products
+    description: public Api Endpoints for product Management
 
 paths:
   /health:
@@ -32,7 +30,7 @@ paths:
         - HealthChecks
       responses:
         '200':
-          description: it will Return Success MEsssage
+          description: it will Return Success Message
           content:
             application/json:
               schema:
@@ -41,119 +39,182 @@ paths:
                   message:
                     type: string
                     example: ok
-  /auth/signup:
-    post:
-      description: For Creating An Account For Authentication
-      tags: [Authentications]
-      requestBody:
-        content:
-          'application/json':
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Mahamodul Hasan Moon
-                email:
-                  type: string
-                  format: email
-                  example: mahamodulhasan.moon@gmail.com
-                password:
-                  type: string
-                  format: password
-                  example: password123
-              required:
-                - name
-                - email
-                - password
-      responses:
-        '201':
-          description: Successfully Created Account
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: integer
-                    format: int32
-                    example: 201
-                  message:
-                    type: string
-                    example: user created Successfully
-                  data:
-                    type: object
-                    properties:
-                      access_token:
-                        type: string
-                        example: iIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-                  links:
-                    type: object
-                    properties:
-                      self:
-                        type: string
-                        example: /auth/signup
-                      signin:
-                        type: string
-                        example: /auth/login
 
-        '400':
-          $ref: '#/components/responses/400'
-  /auth/login:
+  /products:
     post:
-      description: For Login Any User
-      tags: [Authentications]
+      description: Create a new product
+      tags:
+        - Products
       requestBody:
+        required: true
         content:
-          'application/json':
+          application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  format: email
-                  example: mahamodulhasan.moon@gmail.com
-                password:
-                  type: string
-                  format: password
-                  example: password123
-              required:
-                - email
-                - password
+              $ref: '#/components/schemas/Product'
       responses:
         '200':
-          description: Logged in Successfully
+          description: Product created successfully!
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  statusCode:
-                    type: integer
-                    format: int32
-                    example: 200
-                  message:
-                    type: string
-                    example: Logged in Successfully
-                  data:
-                    type: object
-                    properties:
-                      access_token:
-                        type: string
-                        example: iIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-                  links:
-                    type: object
-                    properties:
-                      self:
-                        type: string
-                        example: /auth/login
+                $ref: '#/components/schemas/ProductResponse'
+    get:
+      description: Retrieve a list of all products
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Products fetched successfully!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsResponse'
 
-        '400':
-          $ref: '#/components/responses/400'
-
-# make components
+  /products/{productId}:
+    get:
+      description: Retrieve a specific product by ID
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product fetched successfully!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+    put:
+      description: Update product information
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Product updated successfully!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+    delete:
+      description: Delete a product
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product deleted successfully!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
 
 components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/Variant'
+        inventory:
+          $ref: '#/components/schemas/Inventory'
+      required:
+        - name
+        - description
+        - price
+        - category
+        - tags
+        - variants
+        - inventory
+
+    Variant:
+      type: object
+      properties:
+        type:
+          type: string
+        value:
+          type: string
+      required:
+        - type
+        - value
+
+    Inventory:
+      type: object
+      properties:
+        quantity:
+          type: number
+        inStock:
+          type: boolean
+      required:
+        - quantity
+        - inStock
+
+    ProductResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/Product'
+
+    ProductsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: "integer"
+
   responses:
     '400':
       description: Bad Request
