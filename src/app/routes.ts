@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import { productsRoutes } from '../modules/products/products.routes';
 const routes = Router();
 
 routes.get('/health', (_req: Request, res: Response) => {
@@ -10,5 +11,6 @@ routes.get('/health', (_req: Request, res: Response) => {
 });
 
 // all Routes
+routes.use('/products',productsRoutes)
 
 export default routes;
