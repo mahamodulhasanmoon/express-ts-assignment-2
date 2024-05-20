@@ -52,6 +52,6 @@ const productSchema = new Schema<IProduct>({
     type: inventorySchema,
     required: [true, 'Product inventory is required.'],
   },
-});
+},{timestamps: true});
 
 export const Product = model<IProduct>('Product', productSchema);
