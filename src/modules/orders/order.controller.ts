@@ -16,7 +16,10 @@ export const createOrderController = async (
 
     const check = await Product.isProductExist(parsedData.productId);
     if (check) {
-      const result = await createOrderService(parsedData);
+      const { result, error } = await createOrderService(parsedData);
+      if (error) {
+        res.status(404).json(error);
+      }
 
       res.status(201).json({
         success: true,
@@ -40,16 +43,24 @@ export const getAllOrdersController = async (
   next: NextFunction,
 ) => {
   try {
-    const email = req.query.email  as string;
+    const email = req.query.email as string;
+
+    const result = await getAllOrderService(email);
+
+    if(result.length>0){
+      res.status(200).json({
+        success: true,
+        message: 'Orders fetched successfully!',
+        data: result,
+      });
+    }else{
+      res.status(404).json({
+        "success": false,
+        "message": "Order not found"
+       });
+    }
 
 
-    const result = await getAllOrderService(email)
-
-    res.status(200).json({
-      success: false,
-      message: 'Orders fetched successfully!',
-      data:result
-    });
   } catch (error: any) {
     next(error);
   }
