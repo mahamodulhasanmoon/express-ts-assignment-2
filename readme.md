@@ -17,7 +17,7 @@ Follow these steps to set up and run the project locally:
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/mahamodulhasanmoon/label-2-assignment.git
+    git clone https://github.com/mahamodulhasanmoon/express-ts-assignment-2.git
     cd label-2-assignment
     ```
 
