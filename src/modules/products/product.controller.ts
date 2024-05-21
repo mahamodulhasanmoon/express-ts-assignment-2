@@ -115,12 +115,12 @@ export const deleteProductsByIdController = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await deleteProductsByIdService(req.params.productId);
+     await deleteProductsByIdService(req.params.productId);
 
     res.status(200).json({
       success: true,
       message: 'Product deleted successfully!',
-      data: result,
+      data: null,
     });
   } catch (error: any) {
     next(error);
