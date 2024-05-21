@@ -52,7 +52,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Product'
       responses:
-        '200':
+        '201':
           description: Product created successfully!
           content:
             application/json:
@@ -79,6 +79,7 @@ paths:
         - name: productId
           in: path
           required: true
+          example: 664b9b4d7878f552280ce600
           schema:
             type: string
       responses:
@@ -96,6 +97,7 @@ paths:
         - name: productId
           in: path
           required: true
+          example: 664b9b4d7878f552280ce600
           schema:
             type: string
       requestBody:
@@ -119,6 +121,7 @@ paths:
         - name: productId
           in: path
           required: true
+          example: "664b9b4d7878f552280ce600"
           schema:
             type: string
       responses:
@@ -136,16 +139,21 @@ components:
       properties:
         name:
           type: string
+          example: "Wireless Mouse"
         description:
           type: string
+          example: "Ergonomic wireless mouse with adjustable DPI settings."
         price:
           type: number
+          example: 29.99
         category:
           type: string
+          example: "Electronics"
         tags:
           type: array
           items:
             type: string
+            example: "computer"
         variants:
           type: array
           items:
@@ -166,8 +174,10 @@ components:
       properties:
         type:
           type: string
+          example: "color"
         value:
           type: string
+          example: "Black"
       required:
         - type
         - value
@@ -177,8 +187,10 @@ components:
       properties:
         quantity:
           type: number
+          example: 150
         inStock:
           type: boolean
+          example: true
       required:
         - quantity
         - inStock

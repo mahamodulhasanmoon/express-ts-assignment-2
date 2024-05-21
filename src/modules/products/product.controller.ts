@@ -20,12 +20,17 @@ try {
 
 export const getAllProductController = async(req:Request, res:Response, next:NextFunction)=>{
 try {
-   
-    const result = await getAllProductService()
+   const searchTerm = req.query.searchTerm as string
+    const result = await getAllProductService(searchTerm)
 
-    res.status(201).json({
+    let msg:string = 'Products fetched successfully!'
+    if(searchTerm){
+        msg = `Products matching search term '${req.query.searchTerm}' fetched successfully! `
+    }
+
+    res.status(200).json({
       success: true,
-      message: 'Products fetched successfully!',
+      message: msg,
       data: result,
     });
 

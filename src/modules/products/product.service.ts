@@ -5,8 +5,19 @@ export const createProductService = async (data:IProduct)=>{
     const result = await Product.create(data);
     return result
 }
-export const getAllProductService = async ()=>{
-    const result = await Product.find({});
+export const getAllProductService = async (searchTerm:string | undefined)=>{
+  const query = searchTerm
+  ? {
+      $or: [
+        { name: { $regex: searchTerm, $options: 'i' } },
+        { description: { $regex: searchTerm, $options: 'i' } },
+        { category: { $regex: searchTerm, $options: 'i' } },
+        { tags: { $regex: searchTerm, $options: 'i' } },
+      ],
+    }
+  : {};
+  
+    const result = await Product.find(query);
     return result
 }
 
