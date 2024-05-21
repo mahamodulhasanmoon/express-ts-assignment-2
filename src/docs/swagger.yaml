@@ -21,6 +21,8 @@ tags:
     description: public Api Endpoints For check Server is Running Or not
   - name: Products
     description: public Api Endpoints for product Management
+  - name: Orders
+    description: public Api Endpoints for Order Management
 
 paths:
   /health:
@@ -132,6 +134,45 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeleteResponse'
 
+  /orders:
+    post:
+      description: Create a new order
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Order created successfully!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+    get:
+      description: Retrieve a list of all orders or orders filtered by user email
+      tags:
+        - Orders
+      parameters:
+        - name: email
+          in: query
+          description: User email to filter orders
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Orders fetched successfully!
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/OrdersResponse'
+                  - $ref: '#/components/schemas/UserOrdersResponse'
+
 components:
   schemas:
     Product:
@@ -226,6 +267,77 @@ components:
           type: string
         data:
           type: 'integer'
+
+    CreateOrderRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "level2@programming-hero.com"
+        productId:
+          type: string
+          example: "5fd67e890b60c903cd8544a3"
+        price:
+          type: number
+          example: 999
+        quantity:
+          type: integer
+          example: 1
+      required:
+        - email
+        - productId
+        - price
+        - quantity
+
+    OrderResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/Order'
+
+    OrdersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+
+    UserOrdersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+
+    Order:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "level2@programming-hero.com"
+        productId:
+          type: string
+          example: "5fd67e890b60c903cd8544a3"
+        price:
+          type: number
+          example: 999
+        quantity:
+          type: integer
+          example: 1
 
   responses:
     '400':
