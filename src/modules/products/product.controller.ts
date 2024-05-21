@@ -41,11 +41,19 @@ export const getAllProductController = async (
       msg = `Products matching search term '${req.query.searchTerm}' fetched successfully! `;
     }
 
-    res.status(200).json({
-      success: true,
-      message: msg,
-      data: result,
-    });
+    if(result.length>0){
+      res.status(200).json({
+        success: true,
+        message: msg,
+        data: result,
+      });
+    }else{
+      res.status(404).json({
+        success: false,
+        message: "Product not found"
+       });
+    }
+
   } catch (error: any) {
     next(error);
   }
@@ -58,11 +66,20 @@ export const getProductsByIdController = async (
   try {
     const result = await getProductsByIdService(req.params.productId);
 
-    res.status(200).json({
-      success: true,
-      message: 'Products fetched successfully!',
-      data: result,
-    });
+
+
+    if(result=== null){
+      res.status(200).json({
+        success: true,
+        message: 'Products fetched successfully!',
+        data: result,
+      });
+    }else{
+      res.status(404).json({
+        "success": false,
+        "message": "Product not found"
+       });
+    }
   } catch (error: any) {
     next(error);
   }
