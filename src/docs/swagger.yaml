@@ -15,7 +15,7 @@ servers:
   - description: Development
     url: http://localhost:4000/api
   - description: Production
-    url: http://localhost:6000/api
+    url: https://assignment2-api.brainicsoft.xyz/api
 tags:
   - name: HealthChecks
     description: public Api Endpoints For check Server is Running Or not
