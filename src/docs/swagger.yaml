@@ -64,6 +64,13 @@ paths:
       description: Retrieve a list of all products
       tags:
         - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          example: 664b9b4d7878f552280ce600
+          schema:
+            type: string
       responses:
         '200':
           description: Products fetched successfully!
