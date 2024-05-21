@@ -21,5 +21,3 @@ export const ProductValidationSchema = z.object({
   variants: z.array(VariantSchema).nonempty('Product variants are required.'),
   inventory: InventorySchema,
 });
-
-

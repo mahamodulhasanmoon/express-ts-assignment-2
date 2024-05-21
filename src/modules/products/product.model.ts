@@ -23,35 +23,38 @@ const inventorySchema = new Schema<IInventory>({
   },
 });
 
-const productSchema = new Schema<IProduct>({
-  name: {
-    type: String,
-    required: [true, 'Product name is required.'],
+const productSchema = new Schema<IProduct>(
+  {
+    name: {
+      type: String,
+      required: [true, 'Product name is required.'],
+    },
+    description: {
+      type: String,
+      required: [true, 'Product description is required.'],
+    },
+    price: {
+      type: Number,
+      required: [true, 'Product price is required.'],
+    },
+    category: {
+      type: String,
+      required: [true, 'Product category is required.'],
+    },
+    tags: {
+      type: [String],
+      required: [true, 'Product tags are required.'],
+    },
+    variants: {
+      type: [variantSchema],
+      required: [true, 'Product variants are required.'],
+    },
+    inventory: {
+      type: inventorySchema,
+      required: [true, 'Product inventory is required.'],
+    },
   },
-  description: {
-    type: String,
-    required: [true, 'Product description is required.'],
-  },
-  price: {
-    type: Number,
-    required: [true, 'Product price is required.'],
-  },
-  category: {
-    type: String,
-    required: [true, 'Product category is required.'],
-  },
-  tags: {
-    type: [String],
-    required: [true, 'Product tags are required.'],
-  },
-  variants: {
-    type: [variantSchema],
-    required: [true, 'Product variants are required.'],
-  },
-  inventory: {
-    type: inventorySchema,
-    required: [true, 'Product inventory is required.'],
-  },
-},{timestamps: true});
+  { timestamps: true },
+);
 
 export const Product = model<IProduct>('Product', productSchema);

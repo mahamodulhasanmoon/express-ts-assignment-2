@@ -6,11 +6,11 @@ routes.get('/health', (_req: Request, res: Response) => {
   res.status(200).json({
     status: 200,
     message: 'success',
-    data:"🏓Ping🏓"
+    data: '🏓Ping🏓',
   });
 });
 
 // all Routes
-routes.use('/products',productsRoutes)
+routes.use('/products', productsRoutes);
 
 export default routes;

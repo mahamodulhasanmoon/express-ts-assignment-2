@@ -121,7 +121,7 @@ paths:
         - name: productId
           in: path
           required: true
-          example: "664b9b4d7878f552280ce600"
+          example: '664b9b4d7878f552280ce600'
           schema:
             type: string
       responses:
@@ -139,21 +139,21 @@ components:
       properties:
         name:
           type: string
-          example: "Wireless Mouse"
+          example: 'Wireless Mouse'
         description:
           type: string
-          example: "Ergonomic wireless mouse with adjustable DPI settings."
+          example: 'Ergonomic wireless mouse with adjustable DPI settings.'
         price:
           type: number
           example: 29.99
         category:
           type: string
-          example: "Electronics"
+          example: 'Electronics'
         tags:
           type: array
           items:
             type: string
-            example: "computer"
+            example: 'computer'
         variants:
           type: array
           items:
@@ -174,10 +174,10 @@ components:
       properties:
         type:
           type: string
-          example: "color"
+          example: 'color'
         value:
           type: string
-          example: "Black"
+          example: 'Black'
       required:
         - type
         - value
@@ -225,7 +225,7 @@ components:
         message:
           type: string
         data:
-          type: "integer"
+          type: 'integer'
 
   responses:
     '400':
