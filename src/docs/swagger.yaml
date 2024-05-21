@@ -65,10 +65,10 @@ paths:
       tags:
         - Products
       parameters:
-        - name: productId
-          in: path
-          required: true
-          example: 664b9b4d7878f552280ce600
+        - name: searchTerm
+          in: query
+          required: false
+          example: iphone 13
           schema:
             type: string
       responses:
