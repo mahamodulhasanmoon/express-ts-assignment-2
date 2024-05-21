@@ -5,6 +5,7 @@ export const createProductService = async (data: IProduct) => {
   const result = await Product.create(data);
   return result;
 };
+
 export const getAllProductService = async (searchTerm: string | undefined) => {
   const query = searchTerm
     ? {

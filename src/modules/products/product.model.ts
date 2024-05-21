@@ -1,5 +1,11 @@
 import { Schema, model } from 'mongoose';
-import { IInventory, IProduct, IVariant } from './product.interface';
+import {
+  IInventory,
+  IProduct,
+  IVariant,
+  ProductModel,
+} from './product.interface';
+import { CustomError } from '../../app/errors';
 
 const variantSchema = new Schema<IVariant>({
   type: {
@@ -23,7 +29,7 @@ const inventorySchema = new Schema<IInventory>({
   },
 });
 
-const productSchema = new Schema<IProduct>(
+const productSchema = new Schema<IProduct, ProductModel>(
   {
     name: {
       type: String,
@@ -57,4 +63,14 @@ const productSchema = new Schema<IProduct>(
   { timestamps: true },
 );
 
-export const Product = model<IProduct>('Product', productSchema);
+// check is Product is Exist or Not
+productSchema.statics.isProductExist = async function (id: string) {
+  try {
+    const existingProduct = await Product.findById(id);
+    return existingProduct;
+  } catch (error: any) {
+    throw new CustomError('Please Provide Valid Product ID', 422);
+  }
+};
+
+export const Product = model<IProduct, ProductModel>('Product', productSchema);

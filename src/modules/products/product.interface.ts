@@ -1,3 +1,6 @@
+import { Model } from 'mongoose';
+
+/* eslint-disable no-unused-vars */
 export interface IVariant {
   type: string;
   value: string;
@@ -16,4 +19,10 @@ export interface IProduct {
   tags: string[];
   variants: IVariant[];
   inventory: IInventory;
+}
+
+// for check productId is Exist or Not
+
+export interface ProductModel extends Model<IProduct> {
+  isProductExist: (id: string) => Promise<IProduct | null>;
 }

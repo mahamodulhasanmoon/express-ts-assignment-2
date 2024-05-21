@@ -32,6 +32,7 @@ export const errorHandler = (
     return res.status(error.status).json({
       message: error?.message || 'something went wrong',
       status: error.status,
+      success: false,
       error: error,
     });
   }
